@@ -8,6 +8,7 @@
 
 import logging
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import sys
 import traceback
 
@@ -44,7 +45,7 @@ def main(predict_config: OmegaConf):
     try:
         register_debug_signal_handlers()  # kill -10 <pid> will result in traceback dumped into log
 
-        device = torch.device(predict_config.device)
+        device = torch.device('cpu')
 
         train_config_path = os.path.join(predict_config.model.path, 'config.yaml')
         with open(train_config_path, 'r') as f:
